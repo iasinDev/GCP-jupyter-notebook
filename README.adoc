@@ -11,24 +11,24 @@ The MIT License (MIT).  See LICENSE.adoc
 === How to run
 .To get this project working, perform the following steps:
 ----
-# Step 1
+# Step 1 (in your local machine)
 # create the jupyter machine
 $ gcloud compute instances create jupyter --scopes compute-rw --image-family ubuntu-1604-lts --image-project ubuntu-os-cloud --zone us-central1-f --scopes https://www.googleapis.com/auth/devstorage.read_write --machine-type n1-standard-1
 
-# Step 2
+# Step 2 (in your local machine)
 # SSH into the jupyter machine
 $ gcloud compute ssh jupyter --zone us-central1-f
 
-# Step 3 
+# Step 3 (in the jupyter VM)
 # clone repo
 $ git clone https://github.com/yencarnacion/GCP-jupyter-notebook
 
-# Step 4
+# Step 4 (in the jupyter VM)
 # provision the machine
 $ cd GCP-jupyter-notebook 
-$ sudo bash go.h
+$ sudo bash go.sh
 
-# Step 5
+# Step 5 (in your local machine)
 # See Securely Connecting to VM Instances
 # Forward ports from VM to local machine
 # https://cloud.google.com/solutions/connecting-securely
