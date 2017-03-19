@@ -1,0 +1,5 @@
+---
+# handlers for anaconda role
+
+- name: remove anaconda setup script
+  file: name=/tmp/anaconda.sh state=absent

@@ -1,0 +1,25 @@
+- hosts: crime
+  pre_tasks:
+    - name: install apt packages
+      apt: pkg={{ item }} update_cache=yes cache_valid_time=3600
+      become: True
+      with_items:
+        - python-pip
+        - python-virtualenv
+        - python-psycopg2
+        - python-apt
+        - unzip
+        - tar
+  roles:
+     - { role: ansiblebit.oracle-java,
+         oracle_java_set_as_default: yes,
+         become: yes }
+     - { role: azavea.ansible-spark,
+         spark_version: "2.0.2-bin-hadoop2.7",
+         spark_mirror: "http://www.us.apache.org/dist/spark/spark-2.0.2/",
+         become: yes
+       }
+     - { role: anaconda, 
+         python_version: 'python3',
+         become: yes
+       }

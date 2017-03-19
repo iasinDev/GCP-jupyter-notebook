@@ -1,0 +1,7 @@
+---
+# defaults file for anaconda role
+
+anaconda_home: /usr/lib/anaconda
+notebook_app_ip: '*'
+notebook_app_port: 8888
+python_version: 'python3' #options are python2 and python3

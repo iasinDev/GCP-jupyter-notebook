@@ -1,0 +1,12 @@
+[Unit]
+Description=Notebook
+After=spark.service
+
+[Service]
+Environment="JAVA_HOME=/usr/lib/jvm/java-8-oracle" "SPARK_HOME=/usr/lib/spark" "PATH=/usr/lib/anaconda/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/usr/lib/jvm/java-8-oracle/bin:/usr/lib/jvm/java-8-oracle/db/bin:/usr/lib/jvm/java-8-oracle/jre/bin:/usr/lib/spark/bin" "HOME=/home/ubuntu"
+User=ubuntu
+Group=ubuntu
+ExecStart=/home/ubuntu/spark_notebook.py
+
+[Install]
+WantedBy=multi-user.target

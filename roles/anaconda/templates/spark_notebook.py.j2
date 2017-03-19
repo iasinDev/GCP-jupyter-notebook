@@ -1,0 +1,46 @@
+#!/usr/bin/env python3
+
+# https://github.com/felixcheung/vagrant-projects
+
+from os import chdir, getenv, system, umask
+from os.path import exists, expanduser
+from subprocess import check_output, check_call
+from sys import executable
+
+
+def setenv(var, value, overwrite=True):
+    from os import environ
+    if overwrite or not var in environ:
+        environ[var] = value
+
+#-----------------------
+# PySpark
+#
+
+master = 'local[*]'
+
+num_executors   = 96  # 24
+executor_cores  = 16
+executor_memory = '1g'  # 10g
+driver_memory = '1536M'
+
+default_pyspark_submit_args = '--driver-memory %s --num-executors %d --executor-cores %d --executor-memory %s' % (driver_memory, num_executors, executor_cores, executor_memory)
+pyspark_submit_args = getenv('PYSPARK_SUBMIT_ARGS', None) or default_pyspark_submit_args
+pyspark_submit_args = '--master %s %s' % (master, pyspark_submit_args)
+
+setenv('PYSPARK_PYTHON', executable, overwrite=False)
+setenv('PYSPARK_DRIVER_PYTHON', 'jupyter')  # PySpark Driver (ie. IPython)
+setenv('PYSPARK_DRIVER_PYTHON_OPTS', 'notebook')
+
+#-----------------------
+# Create profile and start
+#
+
+try:
+    cmd = 'pyspark %s' % pyspark_submit_args
+    system(cmd)
+    exit(0)
+
+except KeyboardInterrupt:
+    print ('Aborted\n')
+    exit(1)

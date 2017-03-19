@@ -1,0 +1,105 @@
+---
+# tasks file for anaconda role
+
+- name: install anaconda apt dependencies
+  apt: pkg={{ item }} update_cache=yes cache_valid_time=3600
+  sudo: True
+  with_items:
+    - libsm6 
+    - libxrender1 
+    - libfontconfig1
+
+- name: Download anaconda python2 distribution
+  command: wget http://repo.continuum.io/archive/Anaconda2-2.5.0-Linux-x86_64.sh -O /tmp/anaconda.sh
+  when: python_version == "python2"
+
+- name: Download anaconda python3 distribution
+  command: wget http://repo.continuum.io/archive/Anaconda3-4.2.0-Linux-x86_64.sh -O /tmp/anaconda.sh
+  when: python_version == "python3"
+
+- name: Make anaconda distribution file executable
+  command: chmod 755 /tmp/anaconda.sh
+
+- name: Execute the anaconda setup script
+  shell: /tmp/anaconda.sh -b -p {{ anaconda_home }} creates={{ anaconda_home }} executable=/bin/bash
+  notify:
+    - remove anaconda setup script
+
+- name: Add anaconda to the PATH
+  shell: "echo '{{ item }}' >> /etc/profile executable=/bin/bash"
+  with_items:
+  - "export PATH={{ anaconda_home }}/bin:$PATH"
+
+- name: Download https://github.com/coursier/coursier
+  raw: curl -L -o /usr/bin/coursier https://git.io/vgvpD && chmod +x /usr/bin/coursier
+
+- name: Download Jupyter Scala binaries
+  command: wget https://git.io/vrHhi -O /tmp/jupyter-scala
+  when: python_version == "python3"
+
+- name: Make Jupyter Scala executable
+  file: path=/tmp/jupyter-scala state=touch mode="u=rwx,g=r,o=r" owner="ubuntu" group="ubuntu"
+
+#- name: Update conda to latest version
+#  shell: "{{ anaconda_home }}/bin/conda update conda --yes -q executable=/bin/bash"
+
+#- name: Update Anaconda packages.
+#  command: "{{ anaconda_home }}/bin/conda update anaconda"
+
+- name: Install pip
+  shell: "{{ anaconda_home }}/bin/conda install pip --yes -q executable=/bin/bash"
+
+- name: Install jupyter
+  shell: "{{ anaconda_home }}/bin/conda install jupyter --yes -q executable=/bin/bash"
+
+- name: Creates directory /home/ubuntu/.jupyiter
+  file: path=/home/ubuntu/.jupyter state=directory mode=0700 owner=ubuntu group=ubuntu
+
+- name: Configure jupyter notebook
+  template: src=jupyter_notebook_config.py.j2
+            dest=/home/ubuntu/.jupyter/jupyter_notebook_config.py
+            mode=0664
+            owner=ubuntu group=ubuntu
+
+- name: Install Jupyter Scala binaries
+  command: /tmp/jupyter-scala
+  sudo: yes
+  sudo_user: ubuntu
+  when: python_version == "python3"
+
+- name: Copy jupyter script
+  template: src=spark_notebook.py.j2
+            dest=/home/ubuntu/spark_notebook.py
+            mode=0755
+            owner=ubuntu group=ubuntu
+
+- name: Copy spark notebook conf to systemd directory
+  template: src=spark.service.j2
+            dest=/etc/systemd/system/spark.service
+            mode=0644
+
+- name: Enable spark service
+  command: systemctl enable spark
+
+- name: Start spark service
+  command: systemctl start spark
+
+- name: Copy jupyter notebook conf to systemd directory
+  template: src=notebook.service.j2
+            dest=/etc/systemd/system/notebook.service
+            mode=0644
+
+- name: Enable jupyter notebook.
+  command: systemctl enable notebook
+
+- name: Start jupyter notebook.
+  command: systemctl start notebook
+
+- name: Install html5lib
+  command: /usr/lib/anaconda/bin/conda install -c anaconda --yes -q html5lib
+
+- name: Install folium (for maps)
+  command: /usr/lib/anaconda/bin/conda install --channel https://conda.anaconda.org/conda-forge --yes -q folium
+
+- name: Install geopandas
+  command: /usr/lib/anaconda/bin/conda install -c conda-forge --yes -q geopandas

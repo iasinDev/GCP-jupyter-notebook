@@ -1,0 +1,49 @@
+== GCP-jupyter-notebook
+.This ansible script provisions a machine on the Google Cloud Platform (GCP) with:
+* Oracle Java 8
+* spark_version: "2.0.2-bin-hadoop2.7"
+* Anaconda3-4.2.0-Linux-x86_64.sh (python3)
+* Jupyter Scala binaries for Scala 2.11 when using python3
+
+=== License
+The MIT License (MIT).  See LICENSE.adoc
+
+=== How to run
+.To get this project working, perform the following steps:
+----
+# Step 1
+# create the jupyter machine
+$ gcloud compute instances create jupyter --scopes compute-rw --image-family ubuntu-1604-lts --image-project ubuntu-os-cloud --zone us-central1-f --scopes https://www.googleapis.com/auth/devstorage.read_write --machine-type n1-standard-1
+
+# Step 2
+# SSH into the jupyter machine
+$ gcloud compute ssh jupyter --zone us-central1-f
+
+# Step 3 
+# clone repo
+$ git clone https://github.com/yencarnacion/GCP-jupyter-notebook
+
+# Step 4
+# provision the machine
+$ cd GCP-jupyter-notebook 
+$ sudo bash go.h
+
+# Step 5
+# See Securely Connecting to VM Instances
+# Forward ports from VM to local machine
+# https://cloud.google.com/solutions/connecting-securely
+$ gcloud compute ssh jupyter \
+    --zone us-central1-f \
+    --ssh-flag="-L" \
+    --ssh-flag="8888:localhost:8888" \
+    --ssh-flag="-N" 
+----
+
+.To Use:
+* open http://localhost:8888 in your local browser
+* change the directory to /home/<your username> in the Jupiter Notebook
+
+.Notes:
+* Last run successfully on March 18, 2017
+* You need the GCP IAM 'Compute Instance Admin' and the 'Storage Object Admin' permissions
+* remember to do `gcloud compute instances delete jupyter` when you are done
