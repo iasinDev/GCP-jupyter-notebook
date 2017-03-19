@@ -46,4 +46,4 @@ $ gcloud compute ssh jupyter \
 .Notes:
 * Last run successfully on March 18, 2017
 * You need the GCP IAM 'Compute Instance Admin' and the 'Storage Object Admin' permissions
-* remember to do `gcloud compute instances delete jupyter` when you are done
+* remember to do `gcloud compute instances delete jupyter --zone us-central1-f` when you are done
