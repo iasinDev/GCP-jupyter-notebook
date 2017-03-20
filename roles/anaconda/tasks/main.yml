@@ -98,6 +98,9 @@
 - name: Install "R devtools"
   command: /usr/lib/anaconda/bin/conda install -c r --yes -q r r-devtools 
 
+- name: Symbolic link from gtar to tar
+  raw: ln -s /bin/tar /bin/gtar
+
 - name: Install folium (for maps)
   command: /usr/lib/anaconda/bin/conda install --channel https://conda.anaconda.org/conda-forge --yes -q folium
 
