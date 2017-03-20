@@ -14,7 +14,7 @@
   when: python_version == "python2"
 
 - name: Download anaconda python3 distribution
-  command: wget http://repo.continuum.io/archive/Anaconda3-4.2.0-Linux-x86_64.sh -O /tmp/anaconda.sh
+  command: wget https://repo.continuum.io/archive/Anaconda3-4.3.1-Linux-x86_64.sh -O /tmp/anaconda.sh
   when: python_version == "python3"
 
 - name: Make anaconda distribution file executable
@@ -89,17 +89,22 @@
             dest=/etc/systemd/system/notebook.service
             mode=0644
 
-- name: Enable jupyter notebook.
-  command: systemctl enable notebook
-
-- name: Start jupyter notebook.
-  command: systemctl start notebook
-
 - name: Install html5lib
   command: /usr/lib/anaconda/bin/conda install -c anaconda --yes -q html5lib
+
+- name: Install "R Essentials"
+  command: /usr/lib/anaconda/bin/conda install -c r --yes -q r-essentials
 
 - name: Install folium (for maps)
   command: /usr/lib/anaconda/bin/conda install --channel https://conda.anaconda.org/conda-forge --yes -q folium
 
 - name: Install geopandas
   command: /usr/lib/anaconda/bin/conda install -c conda-forge --yes -q geopandas
+
+- name: Enable jupyter notebook.
+  command: systemctl enable notebook
+
+- name: Start jupyter notebook.
+  command: systemctl start notebook
+
+

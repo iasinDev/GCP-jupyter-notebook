@@ -2,7 +2,7 @@
 .This ansible script provisions a machine on the Google Cloud Platform (GCP) with:
 * Oracle Java 8
 * spark_version: "2.0.2-bin-hadoop2.7"
-* Anaconda3-4.2.0-Linux-x86_64.sh (python3)
+* Anaconda3-4.3.1-Linux-x86_64.sh (python3)
 * Jupyter Scala binaries for Scala 2.11 when using python3
 
 === License
@@ -28,7 +28,12 @@ $ git clone https://github.com/yencarnacion/GCP-jupyter-notebook
 $ cd GCP-jupyter-notebook 
 $ sudo bash go.sh
 
-# Step 5 (in your local machine)
+# Step 5 (in the jupyter VM)
+# get the jupyter notebook login token
+$ sudo su ubuntu
+$ /usr/lib/anaconda/bin/jupyter notebook list
+
+# Step 6 (in your local machine)
 # See Securely Connecting to VM Instances
 # Forward ports from VM to local machine
 # https://cloud.google.com/solutions/connecting-securely
@@ -40,10 +45,10 @@ $ gcloud compute ssh jupyter \
 ----
 
 .To Use:
-* open http://localhost:8888 in your local browser
-* change the directory to /home/<your username> in the Jupiter Notebook
+* open `http://localhost:8888?token=<your token>` in your local machine browser
+* change the directory to /home/ubuntu in the Jupiter Notebook
 
 .Notes:
-* Last run successfully on March 18, 2017
+* Last run successfully on March 20, 2017
 * You need the GCP IAM 'Compute Instance Admin' and the 'Storage Object Admin' permissions
 * remember to do `gcloud compute instances delete jupyter --zone us-central1-f` when you are done
