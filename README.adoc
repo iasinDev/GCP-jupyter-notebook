@@ -46,7 +46,7 @@ $ gcloud compute ssh jupyter \
 
 .To Use:
 * open `http://localhost:8888?token=<your token>` in your local machine browser
-* change the directory to /home/<your username> in the Jupiter Notebook
+* change the directory to /home/ubuntu in the Jupiter Notebook
 
 .Notes:
 * Last run successfully on March 20, 2017
