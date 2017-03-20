@@ -95,6 +95,9 @@
 - name: Install "R Essentials"
   command: /usr/lib/anaconda/bin/conda install -c r --yes -q r-essentials
 
+- name: Install "R devtools"
+  command: /usr/lib/anaconda/bin/conda install -c r --yes -q r r-devtools 
+
 - name: Install folium (for maps)
   command: /usr/lib/anaconda/bin/conda install --channel https://conda.anaconda.org/conda-forge --yes -q folium
 
