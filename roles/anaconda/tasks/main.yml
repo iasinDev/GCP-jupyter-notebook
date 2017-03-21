@@ -8,6 +8,7 @@
     - libsm6 
     - libxrender1 
     - libfontconfig1
+    - r-base-dev
 
 - name: Download anaconda python2 distribution
   command: wget http://repo.continuum.io/archive/Anaconda2-2.5.0-Linux-x86_64.sh -O /tmp/anaconda.sh
@@ -95,8 +96,11 @@
 - name: Install "R Essentials"
   command: /usr/lib/anaconda/bin/conda install -c r --yes -q r-essentials
 
+- name: Install "R base"
+  command: /usr/lib/anaconda/bin/conda install -c r --yes -q r-base 
+
 - name: Install "R devtools"
-  command: /usr/lib/anaconda/bin/conda install -c r --yes -q r r-devtools 
+  command: /usr/lib/anaconda/bin/conda install -c r --yes -q r-devtools 
 
 - name: Symbolic link from gtar to tar
   raw: ln -s /bin/tar /bin/gtar
