@@ -49,7 +49,21 @@ $ gcloud compute ssh jupyter \
 * open `http://localhost:8888?token=<your token>` in your local machine browser
 * change the directory to /home/ubuntu in the Jupiter Notebook
 
-.Notes:
+=== Notes about Anaconda R
+----
+# The R installed by Anaconda can be found at:
+/usr/lib/anaconda/lib/R/bin/R
+# it is different from the system installed R
+
+# If you want to install R packages, you may want to open an R notebook and execute:
+system("mkdir -p ~/anaconda3/lib/R/library", intern=TRUE)
+# Then, in the first cell put:
+.libPaths("~/anaconda3/lib/R/library")
+# You can then install R packages as follows:
+install.packages("png","~/anaconda3/lib/R/library")
+----
+
+.Other Notes:
 * Last run successfully on March 20, 2017
 * You need the GCP IAM 'Compute Instance Admin' and the 'Storage Object Admin' permissions
 * remember to do `gcloud compute instances delete jupyter --zone us-central1-f` when you are done
