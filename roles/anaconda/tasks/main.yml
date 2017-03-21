@@ -53,7 +53,7 @@
 - name: Install jupyter
   shell: "{{ anaconda_home }}/bin/conda install jupyter --yes -q executable=/bin/bash"
 
-- name: Creates directory /home/ubuntu/.jupyiter
+- name: Creates directory /home/ubuntu/.jupyter
   file: path=/home/ubuntu/.jupyter state=directory mode=0700 owner=ubuntu group=ubuntu
 
 - name: Configure jupyter notebook
