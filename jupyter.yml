@@ -16,7 +16,7 @@
          become: yes }
      - { role: azavea.ansible-spark,
          spark_version: "2.1.0-bin-hadoop2.6",
-         spark_mirror: "http://www.us.apache.org/dist/spark/spark-2.0.2/",
+         spark_mirror: "http://www.us.apache.org/dist/spark/spark-2.1.0/",
          become: yes
        }
      - { role: anaconda, 
