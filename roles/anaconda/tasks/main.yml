@@ -50,6 +50,9 @@
 - name: Install pip
   shell: "{{ anaconda_home }}/bin/conda install pip --yes -q executable=/bin/bash"
 
+- name: Install python 3.5
+  raw: /usr/lib/anaconda/bin/conda install python=3.5.3 --yes -q executable=/bin/bash"
+
 - name: Install jupyter
   shell: "{{ anaconda_home }}/bin/conda install jupyter --yes -q executable=/bin/bash"
 
@@ -104,6 +107,9 @@
 
 - name: Symbolic link from gtar to tar
   raw: ln -s /bin/tar /bin/gtar
+
+- name: Install r-rjson
+  raw: sudo /usr/lib/anaconda/bin/conda install -c r --yes -q r-rjson
 
 - name: Install folium (for maps)
   command: /usr/lib/anaconda/bin/conda install --channel https://conda.anaconda.org/conda-forge --yes -q folium
