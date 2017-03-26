@@ -1,7 +1,7 @@
 == GCP-jupyter-notebook
 .This ansible script provisions a machine on the Google Cloud Platform (GCP) with:
 * Oracle Java 8
-* spark_version: "2.0.2-bin-hadoop2.7"
+* spark_version: "2.1.0-bin-hadoop2.6"
 * Anaconda3-4.3.1-Linux-x86_64.sh (python3)
 * Jupyter Scala binaries for Scala 2.11 when using python3
 * The Anacoda https://anaconda.org/r/r-essentials[R Essentials bundle]

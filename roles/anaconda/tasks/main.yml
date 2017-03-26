@@ -51,7 +51,7 @@
   shell: "{{ anaconda_home }}/bin/conda install pip --yes -q executable=/bin/bash"
 
 - name: Install python 3.5
-  raw: /usr/lib/anaconda/bin/conda install python=3.5.3 --yes -q executable=/bin/bash"
+  shell: "{{ anaconda_home }}/bin/conda install python=3.5.3 --yes -q executable=/bin/bash"
 
 - name: Install jupyter
   shell: "{{ anaconda_home }}/bin/conda install jupyter --yes -q executable=/bin/bash"
