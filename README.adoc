@@ -1,7 +1,7 @@
 == GCP-jupyter-notebook
 .This ansible script provisions a machine on the Google Cloud Platform (GCP) with:
 * Oracle Java 8
-* spark_version: "2.0.2-bin-hadoop2.7"
+* spark_version: "2.1.0-bin-hadoop2.6"
 * Anaconda3-4.3.1-Linux-x86_64.sh (python3)
 * Jupyter Scala binaries for Scala 2.11 when using python3
 * The Anacoda https://anaconda.org/r/r-essentials[R Essentials bundle]
@@ -57,13 +57,16 @@ $ gcloud compute ssh jupyter \
 
 # If you want to install R packages, you may want to open an R notebook and execute:
 system("mkdir -p ~/anaconda3/lib/R/library", intern=TRUE)
-# Then, in the first cell put:
+system("echo R_LIBS=~/anaconda3/lib/R/library > ~/.Renviron", intern=TRUE)
+# Then do a Kernel>Restart and in the first cell of your notebook put:
 .libPaths("~/anaconda3/lib/R/library")
 # You can then install R packages as follows:
 install.packages("png","~/anaconda3/lib/R/library")
+# or 
+/usr/lib/anaconda/lib/R/bin/R CMD INSTALL --library=~/anaconda3/lib/R/library brocolors_0.1.tar.gz
 ----
 
 .Other Notes:
-* Last run successfully on March 20, 2017
+* Last run successfully on March 26, 2017
 * You need the GCP IAM 'Compute Instance Admin' and the 'Storage Object Admin' permissions
 * remember to do `gcloud compute instances delete jupyter --zone us-central1-f` when you are done
