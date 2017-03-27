@@ -67,6 +67,6 @@ install.packages("png","~/anaconda3/lib/R/library")
 ----
 
 .Other Notes:
-* Last run successfully on March 20, 2017
+* Last run successfully on March 26, 2017
 * You need the GCP IAM 'Compute Instance Admin' and the 'Storage Object Admin' permissions
 * remember to do `gcloud compute instances delete jupyter --zone us-central1-f` when you are done
